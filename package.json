@@ -1,0 +1,24 @@
+{
+    "name": "quickedit",
+    "version": "1.0.0",
+    "description": "Easily split your videos in seconds",
+    "license": "WTFPL",
+    "author": {
+        "email": "zoey@panties.moe",
+        "name": "Zoey",
+        "url": "https://panties.moe"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NotZoeyDev/QuickEdit.git"
+    },
+    "devDependencies": {
+        "electron": "^3.0.10",
+        "electron-builder": "^20.38.2"
+    },
+    "main": "src/app.js",
+    "scripts": {
+        "start": "electron .",
+        "dist": "electron-builder"
+    }
+}
