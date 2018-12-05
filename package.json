@@ -20,5 +20,9 @@
     "scripts": {
         "start": "electron .",
         "dist": "electron-builder"
+    },
+    "build": {
+        "appId": "moe.panties.quickedit",
+        "productName": "QuickEdit"
     }
 }
