@@ -4,7 +4,7 @@
 */
 
 // Imports
-const remote = require('electron').remote, {dialog} = remote, path = require('path'), { spawn } = require('child_process');
+const remote = require('electron').remote, {BrowserWindow, dialog} = remote, path = require('path'), { spawn } = require('child_process');
 
 // Access to the video html object
 let videoPlayer = document.querySelector("video");
@@ -17,9 +17,28 @@ let endTime;
 let startText = document.querySelector(".start");
 let endText = document.querySelector(".end");
 
+remote.getCurrentWindow().webContents.openDevTools();
+
 // Handles keypresses
 document.addEventListener("keydown", (event) => {
     let key = event.keyCode;
+
+    if(key == 67) {
+        let concatWindow = new BrowserWindow({
+            parent: remote.getCurrentWindow(),
+            modal: true,
+            show: false
+        });
+
+        concatWindow.setMenu(null);
+
+        concatWindow.loadFile(`${__dirname}/concat/concat.html`);
+
+        concatWindow.on('ready-to-show', () => {
+            concatWindow.show();
+            concatWindow.webContents.openDevTools();
+        });
+    }
 
     // Save/render key
     if(key == 83) { 
@@ -83,12 +102,13 @@ document.addEventListener("keydown", (event) => {
 // Open dialog
 let openDialog = () => {
     dialog.showOpenDialog(remote.getCurrentWindow(), {
-        properties: ["openFile"]
+        properties: ["openFile"],
+        filters: [
+            { name: "Videos", extensions: ["mkv", "mp4"]}
+        ]
     }, (files, bookmarks) => {
         if(files) {
             videoPlayer.src = files[0];
-        } else {
-            openDialog();
         }
     });
 }
