@@ -80,15 +80,15 @@ document.addEventListener('keydown', (event) => {
         let ffmpeg = spawn("ffmpeg", params);
 
         ffmpeg.stdout.on('data', (data) => {
-            console.log(data.toString('utf8'));
+            //console.log(data.toString('utf8'));
         });
 
         ffmpeg.stderr.on('data', (data) => {
-            console.log(data.toString('utf8'));
+            //console.log(data.toString('utf8'));
         });
 
         ffmpeg.on('close', (code) => {
-            console.log(code);
+            //console.log(code);
             fs.unlinkSync(`${outputFolder}/files.txt`);
         });
     }
