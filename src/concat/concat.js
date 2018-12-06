@@ -6,6 +6,8 @@
 // Imports
 const spawn = require('child_process').spawn, remote = require('electron').remote, {dialog} = remote, fs = require('fs'), path = require('path');
 
+document.querySelector(".videos").innerHTML = "";
+
 document.addEventListener('keydown', (event) => {
     let key = event.keyCode;
 
@@ -49,9 +51,7 @@ document.addEventListener('keydown', (event) => {
 
     // Remove everything
     if(key == 87) {
-        let videos = document.querySelector(".videos");
-        let cloneNode = videos.cloneNode(false);
-        videos.parentNode.replaceChild(cloneNode, videos);
+        document.querySelector(".videos").innerHTML = "";
     }
 
     // Concat
@@ -79,7 +79,16 @@ document.addEventListener('keydown', (event) => {
 
         let ffmpeg = spawn("ffmpeg", params);
 
+        ffmpeg.stdout.on('data', (data) => {
+            console.log(data.toString('utf8'));
+        });
+
+        ffmpeg.stderr.on('data', (data) => {
+            console.log(data.toString('utf8'));
+        });
+
         ffmpeg.on('close', (code) => {
+            console.log(code);
             fs.unlinkSync(`${outputFolder}/files.txt`);
         });
     }
@@ -112,7 +121,8 @@ document.addEventListener('keydown', (event) => {
 
         // Item to the left
         if(key == 37) {
-            if(parseInt(position) - 1 > 0) {
+            console.log(position);
+            if(parseInt(position) - 1 >= 0) {
                 videosContainer.insertBefore(videoContainer, videosContainer.childNodes[parseInt(position) - 1]);
             }
         }

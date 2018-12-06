@@ -17,17 +17,19 @@ let endTime;
 let startText = document.querySelector(".start");
 let endText = document.querySelector(".end");
 
-remote.getCurrentWindow().webContents.openDevTools();
-
 // Handles keypresses
-document.addEventListener("keydown", (event) => {
+window.addEventListener("keydown", (event) => {
+    event.preventDefault();
     let key = event.keyCode;
 
     if(key == 67) {
         let concatWindow = new BrowserWindow({
             parent: remote.getCurrentWindow(),
             modal: true,
-            show: false
+            show: false,
+            height: 300,
+            width: 800,
+            maximizable: false
         });
 
         concatWindow.setMenu(null);
@@ -36,7 +38,6 @@ document.addEventListener("keydown", (event) => {
 
         concatWindow.on('ready-to-show', () => {
             concatWindow.show();
-            concatWindow.webContents.openDevTools();
         });
     }
 
@@ -97,7 +98,7 @@ document.addEventListener("keydown", (event) => {
     if(key == 37) {
         videoPlayer.currentTime -= 1/60;
     }
-});
+}, false);
 
 // Open dialog
 let openDialog = () => {
