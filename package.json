@@ -13,7 +13,7 @@
         "url": "https://github.com/NotZoeyDev/QuickEdit.git"
     },
     "devDependencies": {
-        "electron": "^6.0.9",
+        "electron": "^7.2.4",
         "electron-builder": "^21.2.0"
     },
     "main": "src/app.js",
